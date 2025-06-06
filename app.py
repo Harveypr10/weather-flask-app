@@ -1,18 +1,19 @@
-code = """
 from flask import Flask, request, render_template
 import requests
-
-app = Flask(__name__)
-
 import os
 from dotenv import load_dotenv
 
-load_dotenv()  # Load environment variables
+# Load environment variables
+load_dotenv()
 
-API_KEY = os.getenv("GOOGLE_API_KEY")  # Securely fetch API key
+# Initialize Flask app
+app = Flask(__name__)
+
+# Securely fetch API key
+API_KEY = os.getenv("GOOGLE_API_KEY")
 
 def get_weather(city):
-    \"\"\"Fetch weather data from OpenWeather API.\"\"\"
+    """Fetch weather data from OpenWeather API."""
     url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}&units=metric"
 
     try:
@@ -35,7 +36,7 @@ def get_weather(city):
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    \"\"\"Render the web app and update location dynamically.\"\"\"
+    """Render the web app and update location dynamically."""
     location = {"lat": 51.5074, "lon": -0.1278}  # Default: London
     weather_data = None
 
@@ -49,12 +50,6 @@ def index():
     print("DEBUG: Sending location:", location)  # Debugging step
     return render_template("index.html", weather=weather_data, location=location)
 
+# Ensure Gunicorn can properly reference the Flask app
 if __name__ == "__main__":
     app.run(debug=True)
-"""
-
-# Overwrite the file completely
-with open("app.py", "w") as f:
-    f.write(code)
-
-print("File 'app.py' has been successfully updated!")
