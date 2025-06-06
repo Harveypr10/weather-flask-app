@@ -633,3 +633,4 @@ yfinance==0.2.61
 zict==3.0.0
 zipp==3.22.0
 zstandard==0.23.0
+# Flask dependencies
